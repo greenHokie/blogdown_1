@@ -40,7 +40,7 @@ This project will look at the demographics of individuals and families benefitin
 
 # Context 
 
-Like many non-profits, Clackamas Service Center arouse from need.  Located in southeast Portland, the Clackamas Service Center is the area's few social service centers, providing low-income and homeless services to community members of the Clackamas and Multnommah counties.  It was one of the areas only shelters.  
+Like many non-profits, Clackamas Service Center arouse from need.  Located in southeast Portland, the Clackamas Service Center is the area's few social service centers, providing low-income and homeless services to community members of the Clackamas and Multnomah counties.  It was one of the areas only shelters.  
 
 The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it's mission.  Pre-pandemic, the center was a location for the homeless to grab a meal 6 days a week, receive mail, and receive medical attention.  They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed.  Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk.  Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on. 
 
