@@ -1,0 +1,34 @@
+---
+title: Project Proposal 2
+author: Heather Rugnetta
+date: '2021-06-16'
+slug: project-proposal-2
+categories:
+  - R
+tags:
+  - R Markdown
+---
+
+---
+title: "Project Proposal 2: Wave Propagation"
+author: "Heather Rugnetta"
+output:
+ html_document:
+    df_print: paged
+    fig_height: 5
+    fig_width: 8.5
+    highlight: default
+    number_sections: yes
+    theme: journal
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: yes
+      smooth_scroll: yes
+    table: kable
+    self_contained: true
+---
+
+# Overview
+
+Living in the northwest, residents joke about the "Big One" - the earth quake that will trigger mudslides, volcanic eruptions, infrastructure failure, and tsunamis - and what they'll do when it strikes.  Warning signs of impending danger come from triangulating data from earthquake detectors, often triggering an abundance of caution for long periods of time, especially in the case of tsunami warnings.  What if there was a better way to determine where the danger was and when it had passed? By using wave data from buoys off the coast combined with earthquake detection data, we can detect when and where trouble will hit on the coast.
