@@ -31,4 +31,6 @@ output:
 
 # Overview
 
+<!--- I think this is ok in principle; however, I'd like to learn a bit more about the data. There are likely some very complicated pieces here that will be hard to deal with... in particulary, you would need a fairly rigorous definition of "safe" so that you actually know what you are looking for. In addition, there aren't any "big ones" to use as true positives when training a model. -->
+
 Living in the northwest, residents joke about the "Big One" - the earth quake that will trigger mudslides, volcanic eruptions, infrastructure failure, and tsunamis - and what they'll do when it strikes.  Warning signs of impending danger come from triangulating data from earthquake detectors, often triggering an abundance of caution for long periods of time, especially in the case of tsunami warnings.  What if there was a better way to determine where the danger was and when it had passed? By using wave data from buoys off the coast combined with earthquake detection data, we can detect when and where trouble will hit on the coast.
