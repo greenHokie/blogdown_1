@@ -10,49 +10,64 @@ tags:
   - R Markdown
 ---
 
-The Homeless Management Information System (HMIS) is a nationwide database application that was set up with the intention of accounting for the homeless and their needs.  HMIS connects those in need of housing with long term solutions (Homeless Management Information System, 2021), but at what expense?
+The Homeless Management Information System (HMIS) is a nationwide database application that was set up with the intention of accounting for the homeless and their needs.  HMIS connects those in need of housing with long term solutions, but at what expense?
 
 ## Background
-For years localities had no standard means for collecting information on the homeless.  Indeed, there was no clear count of how many homeless were in the U.S. prior to the 1980s, much less who they were as a community.  In the wake of the economic recession of the early 1980s (Early 1980s Recession, 2021), municipalities were very reactive to the influx of homeless resulting from a sagging economy and unemployment.  They set up soup kitchens and shelters ad hoc to address the most immediate needs of those without housing - hunger and a place to sleep.  In the absence of information, organizations could not address the reasons for homelessness – lack of affordable housing, job loss, mental illness, etc.
+For years localities had no standard means for collecting information on the homeless.  Indeed, there was no clear count of how many homeless were in the U.S. prior to the 1980s, much less who they were as a community.  In the wake of the economic recession of the early 1980s [^2], municipalities were very reactive to the influx of homeless resulting from a sagging economy and unemployment.  They set up soup kitchens and shelters ad hoc to address the most immediate needs of those without housing - hunger and a place to sleep.  In the absence of information, organizations could not address the reasons for homelessness – lack of affordable housing, job loss, mental illness, etc.
+
 In 1987, Congress passed the McKinney-Vento Homeless Assistance Act (McKinney-Vento).  McKinney-Vento provided federal funds to homeless shelters and services in the form of grants (H.R.558 - Stewart B. McKinney Homeless Assistance Act, 2021) through the U.S. Department of Housing and Urban Development (HUD).  McKinney-Vento also established Continuum of Care (CoC) programs.  CoC was meant to help community services (Continuum of Care (CoC) Program, 2021)apply for grants together by demonstrating there was a “need gap” that could only be met with federal funding.
-In 2001, Congress wanted evidence that McKinney-Vento and the funds it provided was money well spent.  HUD established the HMIS in answer to this question.  HMIS was set up for two purposes:  counting those that are homeless and standardizing the information collected.  Data on the homeless had been collected for years, however, information across jurisdictions was not standardized and duplication was inevitable. Through a standardized collection, localities are able to quantitatively assess year-over-year patterns, as well as the needs of the houseless to better address them in the long-term.  
+
+In 2001, Congress wanted evidence that McKinney-Vento and the funds it provided was money well spent.  HUD established the HMIS in answer to this question.  HMIS was set up for two purposes:  counting those that are homeless and standardizing the information collected (Homeless Management Information System, 2021).  Data on the homeless had been collected for years, however, information across jurisdictions was not standardized and duplication was inevitable. Through a standardized collection, localities are able to quantitatively assess year-over-year patterns, as well as the needs of the houseless to better address them in the long-term.  
+
 Coupled with the Coordinated Entry System (CES), an algorithm introduced in 2013 that calculates an individual’s or family’s level of housing need, the unhoused are matched with stable housing by level of urgency as it comes available.
 
 ## So, what is the problem?
 HMIS collects highly sensitive, personal information about individuals seeking homeless services.  Information such as gender, date of birth, ethnicity, veteran status, and household composition, are benign in and of themselves.  However, HMIS also collects social security numbers, medical and mental history, domestic violence history, substance abuse, and distinguishing personal features, all of which falls into the category of Protected Personal Information (PPI).  
+
 Individuals and families, also known as clients, seeking assistance are asked to voluntarily provide their PPI to the HMIS.  At the time of entry, they are told that their information will be safeguarded and only used by agencies that can help them attain resources and services they need.  They are told that their information may be anonymized and for administrative or academic research purposes.  They are also told that their information will be reported if the client poses a health or safety threat, or when they are legally required to.  While it is emphasized that they are not required to provide PPI, many believe they will not receive services in a timely manner without surrendering this sensitive information.
 Unfortunately, for some this means lying about why they are homeless, or not disclosing their needs fully.
 
 ## Why would you lie to someone trying to help you?
 Being poor or without regular housing has a long history of being criminalized in the US.  Poorhouses, or workhouses, were essentially debtors’ prisons where those who were unable to pay their debts worked them off.  Before the advent of social security, poorhouses were filled with widows and the disabled.  
+
 Modern day, local governments have continued with the criminalization of the homeless.  They are ticketed for things that almost exclusively conditions of being houseless: storing personal property in public, panhandling, sleeping in public places, and loitering.  The ticket usually incurs a fine, which cannot be paid.  A bench warrant is issued and the individual is arrested.  In 2018, more than 50% of the jail bookings in Portland, Oregon were of homeless, with many of individuals being arrested multiple times (Harbarger & Lewis, 2020), and followed by Parole Officers after their release.  The kicker: if the individual spends any time in jail, it is considered a residence and effects their CES score.  Arrests make it that much more difficult to overcome homelessness, and ultimately exasperate the thing arrests were meant to discourage manner: homelessness.
 
 ## Still, why not work openly with HMIS? 
 HMIS borrowed its PPI safeguarding rules from those set forth by the Health Insurance Portability and Accountability Act of 1996 (HIPAA), sharing PPI only with agencies that will help attain resources they need, academic researchers, or when legally required.  Legally required disclosure occurs if the information poses a serious threat to health or safety, is about a victim of domestic violence or abuse, or requested by a law enforcement official (HIPAA, 2021).  Where HIPPA and HMIS differ is in the method of request by a law enforcement official.  HIPAA requires due process, warrants and check points, limited in scope and time frame.  HMIS allows requests to be made orally, with no limits to scope or supervisory approval (O'Brien, 2008). As O’Brien puts, “relaxed disclosure standards for law enforcement purposes pose a specific threat to the collection of accurate data because of the often-tenuous relationship between homeless individuals and law enforcement officials.”
+
 In seeking to hide from law enforcement while improving their likelihood of getting long-term housing with a better CES score, clients will lie or withhold information.  The HMIS nationwide network removes duplicates when they appear in the system; however, when clients knowingly provide the wrong information, they are counted twice or more in the national database.  
 
 ## Why should I care? 
 Clients reporting incorrect information have implications beyond inflating the number of reported homeless in a given area.  CoC programs using HMIS are misinformed about the spectrum of services needed in their region.  Successful continued funding and grants are dependent on the effective use of previous grants; in other words, CoC programs need to be able show that they served communities, client-by-client, as they intended with the money they were given.  
+
 Minorities and those with unique needs are misrepresented in the whole when clients do not disclose their PPI fully;  similar to informing healthcare providers of medical conditions, CoC programs need as much information about the clients they serve to address the causes and effects of homelessness .  From domestic violence shelter beds to mental health services, resources are distributed based on information from HMIS and CES.
+
 Federally, the government also uses the HMIS to inform budgetary decisions on McKinney-Vento.  The HUD awarded $2.5 billion in grants to support 6,597 local homeless services for 2021; Oregon, home to 122 organizations, received $44 million (HUD No. 21-017, 2021) of that total.  Data reported by HMIS in January 2020 shows that 14,655 people were experiencing homelessness any given day of the year (Oregon Homelessness Statistics, 2021), 2.8% of the population of Oregon.  CoCs for Oregon reported that the total emergency and permanent housing beds available year round was 18,007 (OR HUD 2020 Continuum of Care Homeless Assistance Programs , 2020). Of those, 2,287 beds in permanent support housing were dedicated to veterans. 
+
 Given that in 2019, only 1,438 veterans were experiencing homelessness, it begs the question of why so many dedicated beds? Are veterans not providing their status and PPI to the HMIS but using the beds as they are available?  Misrepresentation means that resources are not available to those that need it, leaving the homeless to feel the system has failed them; funding is spent on the wrong issues or in communities that do not need as much assistance; and communities and taxpayers are left to wonder why homelessness is more and more visible, despite increased funding.  This further broadens the feelings of distrust between the homeless and the communities (and law enforcement) of which they live.
+
 HUD spending on grants for homelessness services in 2020 was only 0.04% of the $6.5 trillion spent federally; small in comparison to the national defense or health care budgets, but just as important to the communities and clients receiving the funding.   
 
 ## Who is really to blame? 
 While it may be easy to point fingers and blame the homeless, those that self-report to the HMIS, for providing faulty information, they are protecting themselves from a system that has criminalized them for being poor and robbed them of their autonomy (Eubanks, 2018).  Just as not agreeing to a software’s privacy policy means being barred from using the software to its fullest extent, so too is denying HMIS one’s PPI to access homeless services.  
+
 The responsibility ultimately lies with the biases of communities and the HMIS’s failure to shield the homeless’ PPI from law enforcement officials.  Law enforcement officials act upon the will of the communities they protect; historically that has been to enforce laws that protect the wealthy and criminalize the poor.  Removing oral requests and undefined scopes from the “legally required disclosures” of PPI would not resolve all the issues with homelessness statistics, but it would go a long to way to gaining a better picture of who makes up the country’s homeless while providing them what really need: personal security and a stable environment.
  
 
 ## References
-Continuum of Care (CoC) Program. (2021, June 24). Retrieved from Department of Housing and Urban Development: https://www.hudexchange.info/programs/coc/
-Early 1980s Recession. (2021, June 24). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Early_1980s_recession
-Eubanks, V. (2018). Automating Inequality: How High-Tech Tools Profile, Police, and Punish the Poor. United States: St. Martin's Publishing Group.
-H.R.558 - Stewart B. McKinney Homeless Assistance Act. (2021, June 24). Retrieved from Congress.gov: https://www.congress.gov/bill/100th-congress/house-bill/558
-Harbarger, M., & Lewis, M. (2020, October 25). Booking homeless Portlanders into jail is endless, expensive cycle that arrests don’t curb, but housing does. Retrieved from Oregon Live: https://www.oregonlive.com/crime/2020/10/booking-homeless-portlanders-into-jail-is-endless-expensive-cycle-that-arrests-dont-curb-but-housing-does.html
-HIPAA. (2021, May 4). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Health_Insurance_Portability_and_Accountability_Act
-Homeless Management Information System. (2021, June 24). Retrieved from Department of Housing and Urban Development: https://www.hudexchange.info/programs/hmis/
-HUD No. 21-017. (2021, June 20). Retrieved from HUD Public Affairs: https://www.hud.gov/press/press_releases_media_advisories/HUD_No_21_017
-O'Brien, J. (2008). loose Standards, Tight Lips: Why Easy Access to Client Data Can Undermine Homeless Management Infromation Systems. Fordham Urban Law Journal, 673-699.
-OR HUD 2020 Continuum of Care Homeless Assistance Programs . (2020, January). Retrieved from HUD Exchange: https://files.hudexchange.info/reports/published/CoC_HIC_State_OR_2020.pdf
-Oregon Homelessness Statistics. (2021, June 20). Retrieved from US Interagency Council on Homelessness: https://www.usich.gov/homelessness-statistics/or/
+1. Continuum of Care (CoC) Program. (2021, June 24). Retrieved from Department of Housing and Urban Development: https://www.hudexchange.info/programs/coc/
+
+2. Early 1980s Recession. (2021, June 24). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Early_1980s_recession
+[^2]: https://en.wikipedia.org/wiki/Early_1980s_recession "Early 1980s Recession"
+3. Eubanks, V. (2018). Automating Inequality: How High-Tech Tools Profile, Police, and Punish the Poor. United States: St. Martin's Publishing Group.
+
+4. H.R.558 - Stewart B. McKinney Homeless Assistance Act. (2021, June 24). Retrieved from Congress.gov: https://www.congress.gov/bill/100th-congress/house-bill/558
+
+5. Harbarger, M., & Lewis, M. (2020, October 25). Booking homeless Portlanders into jail is endless, expensive cycle that arrests don’t curb, but housing does. Retrieved from Oregon Live: https://www.oregonlive.com/crime/2020/10/booking-homeless-portlanders-into-jail-is-endless-expensive-cycle-that-arrests-dont-curb-but-housing-does.html
+6. HIPAA. (2021, May 4). Retrieved from Wikipedia: https://en.wikipedia.org/wiki/Health_Insurance_Portability_and_Accountability_Act
+7. Homeless Management Information System. (2021, June 24). Retrieved from Department of Housing and Urban Development: https://www.hudexchange.info/programs/hmis/
+8. HUD No. 21-017. (2021, June 20). Retrieved from HUD Public Affairs: https://www.hud.gov/press/press_releases_media_advisories/HUD_No_21_017
+9. O'Brien, J. (2008). loose Standards, Tight Lips: Why Easy Access to Client Data Can Undermine Homeless Management Infromation Systems. Fordham Urban Law Journal, 673-699.
+10. OR HUD 2020 Continuum of Care Homeless Assistance Programs . (2020, January). Retrieved from HUD Exchange: https://files.hudexchange.info/reports/published/CoC_HIC_State_OR_2020.pdf
+11. Oregon Homelessness Statistics. (2021, June 20). Retrieved from US Interagency Council on Homelessness: https://www.usich.gov/homelessness-statistics/or/
 
