@@ -79,12 +79,20 @@ head(pantry)
 ```
 
 ```{r}
-
 grant <-  read_csv("index_files/CSC_Grant_Data.csv")
 head(grant)
-
 ```
 
+```{r}
+m <- ggplot(grant, aes(Month, DeliverMultnomah)) +
+  geom_point()
+g
+```
+```{r}
+c <- ggplot(grant, aes(Month, DeliverClackamas)) +
+  geom_point()
+c
+```
 
 ## Conclusion
 
