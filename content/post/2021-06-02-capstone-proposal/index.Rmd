@@ -7,6 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
+  - Houseless
 ---
 
 ---
@@ -36,10 +37,10 @@ This project will look at the demographics of individuals and families benefitin
 ## Context
 
 
-Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area's few social service centers, providing low-income and homeless services to community members of the Clackamas and Multnommah counties. It was one of the areas only shelters.
+Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area's few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnommah counties. It was one of the areas only shelters.
 
 
-The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it's mission. Pre-pandemic, the center was a location for the homeless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed. Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on.
+The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it's mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed. Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on.
 
 The Clackamas Service Center soldiered on, but how? What can the Clackamas Service Center learn from this crisis and, as a non-profit, can they prepare for the next disaster?
 
@@ -51,7 +52,7 @@ What they don't have a clear picture of is how they assist the community, or rat
 
 The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.
 
-With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplications, and streamline their data collection while still maintaining the trust level they've established with their homeless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
+With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplication, and streamline their data collection while still maintaining the trust level they've established with their houseless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
 
 ## EDA
 ```{r setup, include=FALSE}
@@ -86,7 +87,7 @@ head(grant)
 ```{r}
 m <- ggplot(grant, aes(Month, DeliverMultnomah)) +
   geom_point()
-g
+m
 ```
 ```{r}
 c <- ggplot(grant, aes(Month, DeliverClackamas)) +
@@ -94,12 +95,13 @@ c <- ggplot(grant, aes(Month, DeliverClackamas)) +
 c
 ```
 
+# Next steps
+
+Continue with EDA, make some pretty graphics.  Explore a dashboard.  Look at data on criminalization of the houseless.
+
+
 ## Conclusion
 
-Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the homeless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.
+Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the houseless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.
 
 The are some limitations to be assumed with the data, as it is all manually entered; one can assume that the volunteers who would have collected the data were also impacted by COVID. Sensitive information will likely be redacted and fidelity may be lost. In-kind donations of meals and clothing are valued subjectively, and the monetary value to the organization will likely be inconsistent.
-
-### An Aside
-
-The organization is also seeking some assistance writing a job description for a future data science role, as well as some assistance creating a new, single interface for inputting data, versus the 4 they use now.

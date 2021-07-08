@@ -7,6 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
+  - Houseless
 ---
 
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
@@ -16,8 +17,8 @@ tags:
 <p>This project will look at the demographics of individuals and families benefiting from non-profits, as well as the donors and volunteers that help those organizations exist. Specifically, data from the Clackamas Service Center (CSC), an unhoused assistance program, before and during COVID-19 will be examined. With this information, the CSC and similarly focused organizations can forge a path forward to better serve their clients if and when the next disaster strikes.</p>
 <div id="context" class="section level2">
 <h2>Context</h2>
-<p>Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area’s few social service centers, providing low-income and homeless services to community members of the Clackamas and Multnommah counties. It was one of the areas only shelters.</p>
-<p>The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it’s mission. Pre-pandemic, the center was a location for the homeless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed. Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on.</p>
+<p>Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area’s few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnommah counties. It was one of the areas only shelters.</p>
+<p>The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it’s mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed. Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on.</p>
 <p>The Clackamas Service Center soldiered on, but how? What can the Clackamas Service Center learn from this crisis and, as a non-profit, can they prepare for the next disaster?</p>
 </div>
 <div id="proposal" class="section level2">
@@ -25,7 +26,7 @@ tags:
 <p>As a non-profit, the Clackamas Service Center does an excellent job of tracking their monetary donations and who their donors are. They know basic information about the donors, how often they give, and how much. They know how much monetary value is distributed through to their staff and the items purchased to support their programs directly. They also track in-kind donations and volunteer hours.</p>
 <p>What they don’t have a clear picture of is how they assist the community, or rather, a dollar amount per person per day. They track the number of meals served, hygiene kits distributed, showers facilitated, and how many individuals they assist each day. Separately, they track demographics for those unhoused individuals who volunteer their information. They also track the number of food boxes as well as those who receive them.</p>
 <p>The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.</p>
-<p>With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplications, and streamline their data collection while still maintaining the trust level they’ve established with their homeless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.</p>
+<p>With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplication, and streamline their data collection while still maintaining the trust level they’ve established with their houseless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.</p>
 </div>
 <div id="eda" class="section level2">
 <h2>EDA</h2>
@@ -62,38 +63,39 @@ tags:
 ## #   Dec-20 &lt;chr&gt;, Jan-21 &lt;chr&gt;, Feb-21 &lt;chr&gt;, Mar-21 &lt;dbl&gt;, Apr-21 &lt;dbl&gt;,
 ## #   May-21 &lt;lgl&gt;, Jun-21 &lt;lgl&gt;, Jul-21 &lt;lgl&gt;, Aug-21 &lt;lgl&gt;, Sep-21 &lt;lgl&gt;,
 ## #   Oct-21 &lt;lgl&gt;, Nov-21 &lt;lgl&gt;, Dec-21 &lt;lgl&gt;</code></pre>
-<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
 <pre><code>## 
 ## -- Column specification --------------------------------------------------------
 ## cols(
-##   X1 = col_character(),
-##   `# of Marketplace Visits Per Month` = col_double(),
-##   `# Boxes Per Month` = col_double(),
-##   `# of To Go Bags Provided Each Month` = col_double(),
-##   `Lbs of Food Received` = col_double(),
-##   `Lbs of Food Distributed Each Month` = col_double(),
-##   `# of Deliveries - Multnomah County` = col_double(),
-##   `# of Deliveries Clackamas County` = col_double()
+##   Month = col_character(),
+##   Market_Visits = col_double(),
+##   Boxes = col_double(),
+##   ToGo_Bags = col_double(),
+##   LbsFood = col_double(),
+##   LbsFood_Distr = col_double(),
+##   DeliverMultnomah = col_double(),
+##   DeliverClackamas = col_double()
 ## )</code></pre>
 <pre><code>## # A tibble: 6 x 8
-##   X1     `# of Marketplace~ `# Boxes Per Mo~ `# of To Go Bags ~ `Lbs of Food Re~
-##   &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;              &lt;dbl&gt;            &lt;dbl&gt;
-## 1 Jan 2~               1047                0                  0            59538
-## 2 Feb 2~                888                0                  0            41649
-## 3 Mar 2~               1170                0                  0            40130
-## 4 Apr 2~                937                0                  0            48020
-## 5 May 2~                946                0                  0            53728
-## 6 Jun 2~                947                0                  0            70501
-## # ... with 3 more variables: Lbs of Food Distributed Each Month &lt;dbl&gt;,
-## #   # of Deliveries - Multnomah County &lt;dbl&gt;,
-## #   # of Deliveries Clackamas County &lt;dbl&gt;</code></pre>
+##   Month  Market_Visits Boxes ToGo_Bags LbsFood LbsFood_Distr DeliverMultnomah
+##   &lt;chr&gt;          &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;         &lt;dbl&gt;            &lt;dbl&gt;
+## 1 19-Jan          1047     0         0   59538         58824              262
+## 2 19-Feb           888     0         0   41649         41149              222
+## 3 19-Mar          1170     0         0   40130         39648              293
+## 4 19-Apr           937     0         0   48020         47444              234
+## 5 19-May           946     0         0   53728         53083              236
+## 6 19-Jun           947     0         0   70501         69655              238
+## # ... with 1 more variable: DeliverClackamas &lt;dbl&gt;</code></pre>
+<pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
+<div id="next-steps" class="section level1">
+<h1>Next steps</h1>
+<p>Continue with EDA, make some pretty graphics. Explore a dashboard. Look at data on criminalization of the houseless.</p>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
-<p>Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the homeless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.</p>
+<p>Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the houseless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.</p>
 <p>The are some limitations to be assumed with the data, as it is all manually entered; one can assume that the volunteers who would have collected the data were also impacted by COVID. Sensitive information will likely be redacted and fidelity may be lost. In-kind donations of meals and clothing are valued subjectively, and the monetary value to the organization will likely be inconsistent.</p>
-<div id="an-aside" class="section level3">
-<h3>An Aside</h3>
-<p>The organization is also seeking some assistance writing a job description for a future data science role, as well as some assistance creating a new, single interface for inputting data, versus the 4 they use now.</p>
 </div>
 </div>
