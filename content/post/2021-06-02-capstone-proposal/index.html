@@ -27,6 +27,67 @@ tags:
 <p>The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.</p>
 <p>With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplications, and streamline their data collection while still maintaining the trust level they’ve established with their homeless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.</p>
 </div>
+<div id="eda" class="section level2">
+<h2>EDA</h2>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_character(),
+##   `Jan-20` = col_number(),
+##   `Feb-20` = col_number(),
+##   `Mar-20` = col_number(),
+##   `Mar-21` = col_double(),
+##   `Apr-21` = col_double(),
+##   `May-21` = col_logical(),
+##   `Jun-21` = col_logical(),
+##   `Jul-21` = col_logical(),
+##   `Aug-21` = col_logical(),
+##   `Sep-21` = col_logical(),
+##   `Oct-21` = col_logical(),
+##   `Nov-21` = col_logical(),
+##   `Dec-21` = col_logical()
+## )
+## i Use `spec()` for the full column specifications.</code></pre>
+<pre><code>## # A tibble: 6 x 25
+##   X1     `Jan-20` `Feb-20` `Mar-20` `Apr-20` `May-20` `Jun-20` `Jul-20` `Aug-20`
+##   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
+## 1 Marke~      933      983     1058 330      390      374      329      333     
+## 2 House~      505      554      688 no data  no data  no data  no data  no data 
+## 3 Indiv~     2070     2148     2321 no data  no data  no data  no data  no data 
+## 4 To_go~        0        0      173 511      555      550      708      663     
+## 5 Camp_~        0        0        0 180      306      101      0        0       
+## 6 Mobil~        0        0        0 0        0        24       46       177     
+## # ... with 16 more variables: Sep-20 &lt;chr&gt;, Oct-20 &lt;chr&gt;, Nov-20 &lt;chr&gt;,
+## #   Dec-20 &lt;chr&gt;, Jan-21 &lt;chr&gt;, Feb-21 &lt;chr&gt;, Mar-21 &lt;dbl&gt;, Apr-21 &lt;dbl&gt;,
+## #   May-21 &lt;lgl&gt;, Jun-21 &lt;lgl&gt;, Jul-21 &lt;lgl&gt;, Aug-21 &lt;lgl&gt;, Sep-21 &lt;lgl&gt;,
+## #   Oct-21 &lt;lgl&gt;, Nov-21 &lt;lgl&gt;, Dec-21 &lt;lgl&gt;</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   X1 = col_character(),
+##   `# of Marketplace Visits Per Month` = col_double(),
+##   `# Boxes Per Month` = col_double(),
+##   `# of To Go Bags Provided Each Month` = col_double(),
+##   `Lbs of Food Received` = col_double(),
+##   `Lbs of Food Distributed Each Month` = col_double(),
+##   `# of Deliveries - Multnomah County` = col_double(),
+##   `# of Deliveries Clackamas County` = col_double()
+## )</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   X1     `# of Marketplace~ `# Boxes Per Mo~ `# of To Go Bags ~ `Lbs of Food Re~
+##   &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Jan 2~               1047                0                  0            59538
+## 2 Feb 2~                888                0                  0            41649
+## 3 Mar 2~               1170                0                  0            40130
+## 4 Apr 2~                937                0                  0            48020
+## 5 May 2~                946                0                  0            53728
+## 6 Jun 2~                947                0                  0            70501
+## # ... with 3 more variables: Lbs of Food Distributed Each Month &lt;dbl&gt;,
+## #   # of Deliveries - Multnomah County &lt;dbl&gt;,
+## #   # of Deliveries Clackamas County &lt;dbl&gt;</code></pre>
+</div>
 <div id="conclusion" class="section level2">
 <h2>Conclusion</h2>
 <p>Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the homeless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.</p>

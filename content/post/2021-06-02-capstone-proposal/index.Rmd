@@ -53,6 +53,39 @@ The Clackamas Service Center is suffering from a wealth of information they cann
 
 With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplications, and streamline their data collection while still maintaining the trust level they've established with their homeless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
 
+## EDA
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+library(moderndive)
+library(skimr)
+library(dplyr)
+library(ggplot2)
+library(anytime)
+library(lubridate)
+library(readr)
+local({r <- getOption("repos")
+r["CRAN"] <- "http://cran.r-project.org"
+options(repos=r)})
+
+```
+
+
+
+```{r}
+
+pantry <-  read_csv("index_files/CSC_Pantry.csv")
+head(pantry)
+
+```
+
+```{r}
+
+grant <-  read_csv("index_files/CSC_Grant_Data.csv")
+head(grant)
+
+```
+
+
 ## Conclusion
 
 Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the homeless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.
