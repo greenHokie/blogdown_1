@@ -1,5 +1,5 @@
 ---
-title: Capstone Proposal
+title: Capstone Proposal (Updated)
 author: Heather Rugnetta
 date: '2021-06-02'
 slug: capstone-proposal
@@ -8,26 +8,6 @@ categories:
 tags:
   - R Markdown
   - Houseless
----
-
----
-title: "Project Proposal: Helping Non-Profits Weather Uncertainity"
-author: "Heather Rugnetta"
-output:
- html_document:
-    df_print: paged
-    fig_height: 5
-    fig_width: 8.5
-    highlight: default
-    number_sections: yes
-    theme: journal
-    toc: yes
-    toc_depth: 2
-    toc_float:
-      collapsed: yes
-      smooth_scroll: yes
-    table: kable
-    self_contained: true
 ---
 
 COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals struggled to make ends meet and reached out to community organizations like food pantries and utility assistance programs for help. How did these organizations handle the influx of need? How did that impact the families and individuals who were being helped prior COVID?
@@ -64,6 +44,8 @@ library(ggplot2)
 library(anytime)
 library(lubridate)
 library(readr)
+library(tidyverse)
+library(tsibble)
 local({r <- getOption("repos")
 r["CRAN"] <- "http://cran.r-project.org"
 options(repos=r)})
@@ -81,19 +63,30 @@ head(pantry)
 
 ```{r}
 grant <-  read_csv("index_files/CSC_Grant_Data.csv")
+
+grant$Month <- grant$Month %>%  as.Date(format = "%d-%b-%y")
 head(grant)
 ```
+```{r}
+grant2 <- grant %>% 
+  pivot_longer(
+    cols = c(DeliverMultnomah, DeliverClackamas), 
+    names_to ="Location",
+    values_to = "Lbs")
+grant2 <- grant2 %>% 
+  select(Month, Location, Lbs)
+grant2 <- as_tsibble(grant2, key = Location, index = Month)
+#grant2[ , !(names(grant2) %in% drop)]
+grant2
+```
+
 
 ```{r}
-m <- ggplot(grant, aes(Month, DeliverMultnomah)) +
+m <- ggplot(grant2, aes(Month, Lbs, color=Location)) +
   geom_point()
 m
 ```
-```{r}
-c <- ggplot(grant, aes(Month, DeliverClackamas)) +
-  geom_point()
-c
-```
+
 
 # Next steps
 
