@@ -62,13 +62,15 @@ head(pantry)
 ```
 
 ```{r}
-grant <-  read_csv("index_files/CSC_Grant_Data.csv")
+grantData <-  read_csv("index_files/CSC_Grant_Data.csv")
 
-grant$Month <- grant$Month %>%  as.Date(format = "%d-%b-%y")
-head(grant)
+grantData$Month <- grantData$Month %>%  as.Date(format = "%d-%b-%y")
+head(grantData)
 ```
+
+
 ```{r}
-grant2 <- grant %>% 
+grant2 <- grantData %>% 
   pivot_longer(
     cols = c(DeliverMultnomah, DeliverClackamas), 
     names_to ="Location",
@@ -93,7 +95,17 @@ deliver
 ```
 
 
-
+```{r}
+donorData <-  read_csv("index_files/csc_donations-2017.csv")
+donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
+donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
+head(donorData)
+```
+```{r}
+donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
+  geom_point()
+donation
+```
 
 
 
