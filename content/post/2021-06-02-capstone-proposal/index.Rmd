@@ -79,13 +79,22 @@ grant2 <- as_tsibble(grant2, key = Location, index = Month)
 #grant2[ , !(names(grant2) %in% drop)]
 grant2
 ```
+```{r}
+foodDistr <- ggplot(grant, aes(Month, LbsFood_Distr))+
+  geom_point()
+foodDistr
+```
 
 
 ```{r}
-m <- ggplot(grant2, aes(Month, Lbs, color=Location)) +
+deliver <- ggplot(grant2, aes(Month, Lbs, color=Location)) +
   geom_point()
-m
+deliver
 ```
+
+
+
+
 
 
 # Next steps
