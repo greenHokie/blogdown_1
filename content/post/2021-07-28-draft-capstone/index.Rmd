@@ -1,18 +1,20 @@
 ---
-title: Capstone Proposal (Updated)
-author: Heather Rugnetta
-date: '2021-06-02'
-slug: capstone-proposal
+title: Draft Capstone
+author: H. Rugnetta
+date: '2021-07-28'
+slug: draft-capstone
 categories:
   - R
 tags:
-  - R Markdown
   - Houseless
+  - R Markdown
 ---
+
+*** WORK IN PROGRESS ***
 
 COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals struggled to make ends meet and reached out to community organizations like food pantries and utility assistance programs for help. How did these organizations handle the influx of need? How did that impact the families and individuals who were being helped prior COVID?
 
-This project will look at the demographics of individuals and families benefiting from non-profits, as well as the donors and volunteers that help those organizations exist. Specifically, data from the Clackamas Service Center (CSC), an unhoused assistance program, before and during COVID-19 will be examined. With this information, the CSC and similarly focused organizations can forge a path forward to better serve their clients if and when the next disaster strikes.
+This project will look at the donors and volunteers that help those organizations exist. Specifically, data from the Clackamas Service Center (CSC), an unhoused assistance program, before and during COVID-19 will be examined. With this information, the CSC and similarly focused organizations can forge a path forward to better serve their clients if and when the next disaster strikes.
 
 ## Context
 
@@ -54,14 +56,14 @@ options(repos=r)})
 
 
 
-```{r}
+```{r, include=FALSE}
 
 pantry <-  read_csv("index_files/CSC_Pantry.csv")
 head(pantry)
 
 ```
 
-```{r}
+```{r, include=FALSE}
 grantData <-  read_csv("index_files/CSC_Grant_Data.csv")
 
 grantData$Month <- grantData$Month %>%  as.Date(format = "%d-%b-%y")
@@ -69,7 +71,7 @@ head(grantData)
 ```
 
 
-```{r}
+```{r, include=FALSE}
 grant2 <- grantData %>% 
   pivot_longer(
     cols = c(DeliverMultnomah, DeliverClackamas), 
@@ -95,7 +97,7 @@ deliver
 ```
 
 
-```{r}
+```{r, include=FALSE}
 donorData <-  read_csv("index_files/csc_donations-2017.csv")
 donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
@@ -108,10 +110,9 @@ donation
 ```
 
 
-
 # Next steps
 
-Continue with EDA, make some pretty graphics.  Explore a dashboard.  Look at data on criminalization of the houseless.
+Continue with EDA, make some pretty graphics.  Look at data on criminalization of the houseless.  Map out donors and amounts with shiny app.
 
 
 ## Conclusion
