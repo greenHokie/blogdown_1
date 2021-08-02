@@ -10,8 +10,6 @@ tags:
   - R Markdown
 ---
 
-*** WORK IN PROGRESS ***
-
 COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals struggled to make ends meet and reached out to community organizations like food pantries and utility assistance programs for help. How did these organizations handle the influx of need? How did that impact the families and individuals who were being helped prior COVID?
 
 This project will look at the donors and volunteers that help those organizations exist. Specifically, data from the Clackamas Service Center (CSC), an unhoused assistance program, before and during COVID-19 will be examined. With this information, the CSC and similarly focused organizations can forge a path forward to better serve their clients if and when the next disaster strikes.
@@ -26,15 +24,6 @@ The Clackamas Service Center relies heavily on in-kind donations (food, sanitati
 
 The Clackamas Service Center soldiered on, but how? What can the Clackamas Service Center learn from this crisis and, as a non-profit, can they prepare for the next disaster?
 
-## Proposal
-
-As a non-profit, the Clackamas Service Center does an excellent job of tracking their monetary donations and who their donors are. They know basic information about the donors, how often they give, and how much. They know how much monetary value is distributed through to their staff and the items purchased to support their programs directly. They also track in-kind donations and volunteer hours.
-
-What they don't have a clear picture of is how they assist the community, or rather, a dollar amount per person per day. They track the number of meals served, hygiene kits distributed, showers facilitated, and how many individuals they assist each day. Separately, they track demographics for those unhoused individuals who volunteer their information. They also track the number of food boxes as well as those who receive them.
-
-The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.
-
-With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplication, and streamline their data collection while still maintaining the trust level they've established with their houseless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
 
 ## EDA
 ```{r setup, include=FALSE}
@@ -83,7 +72,7 @@ grant2 <- as_tsibble(grant2, key = Location, index = Month)
 #grant2[ , !(names(grant2) %in% drop)]
 grant2
 ```
-```{r}
+```{r, width = "100%", warning=FALSE}
 foodDistr <- ggplot(grantData, aes(Month, LbsFood_Distr))+
   geom_point()
 foodDistr
@@ -103,7 +92,7 @@ donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
 head(donorData)
 ```
-```{r}
+```{r, width = "100%"}
 donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
   geom_point()
 donation
@@ -158,7 +147,7 @@ found <- longlatMAP %>%
 
 
 ```{r, warning=FALSE, echo=F}
-pal <- colorFactor(c("orange", "green", "red", "purple"), domain = c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"))
+pal <- colorFactor(c("red", "green", "blue", "purple"), domain = c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"))
 
 csc <- leaflet(data= longlatMAP, width = "100%") %>% 
   addProviderTiles(providers$Stamen.Toner) %>% 
@@ -265,6 +254,17 @@ leaflet(width = "100%")%>%
 # Next steps
 
 Continue with EDA, make some pretty graphics.  Look at data on criminalization of the houseless.  Map out donors and amounts with shiny app.
+
+
+## Proposal
+
+As a non-profit, the Clackamas Service Center does an excellent job of tracking their monetary donations and who their donors are. They know basic information about the donors, how often they give, and how much. They know how much monetary value is distributed through to their staff and the items purchased to support their programs directly. They also track in-kind donations and volunteer hours.
+
+What they don't have a clear picture of is how they assist the community, or rather, a dollar amount per person per day. They track the number of meals served, hygiene kits distributed, showers facilitated, and how many individuals they assist each day. Separately, they track demographics for those unhoused individuals who volunteer their information. They also track the number of food boxes as well as those who receive them.
+
+The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.
+
+With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplication, and streamline their data collection while still maintaining the trust level they've established with their houseless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
 
 
 ## Conclusion
