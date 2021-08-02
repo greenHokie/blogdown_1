@@ -109,6 +109,158 @@ donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
 donation
 ```
 
+# Where is the funding coming from?
+
+The Clackamas Service Center relies heavily on individual contributions, both in volunteer hours and in funding.  Below are some visuals.
+
+
+```{r, include=F}
+# load packages
+library(tmaptools)
+library(RCurl)
+library(jsonlite)
+library(tidyverse)
+library(tidyr)
+library(leaflet)
+library(ggmap)
+library(tidygeocoder)
+library(maps)
+library(mapview)
+library(OpenStreetMap)
+library(sp)
+library(ggplot2)
+library(ggrepel)
+library(tidycensus)
+
+```
+
+
+```{r, warning=FALSE, include=FALSE}
+longlatMAP <- read_csv("index_files/latlongStart.csv")
+longlatMAP <- longlatMAP[c(1:4,7:8)]
+longlatMAP <- longlatMAP %>% drop_na()
+#head(longlatMAP)
+#mapview(longlatMAP, xcol = "long", ycol = "lat", grid = FALSE)
+```
+
+```{r, warning=FALSE, echo=F}
+indiv <- longlatMAP %>% 
+  filter(Source=="Individual Contributions")
+churc <- longlatMAP %>% 
+  filter(Source=="Churches & Clubs")
+corp <- longlatMAP %>% 
+  filter(Source=="Corporate")
+found <- longlatMAP %>% 
+  filter(Source=="Foundations/Grants/Government")
+```
+
+
+
+
+```{r, warning=FALSE, echo=F}
+pal <- colorFactor(c("orange", "green", "red", "purple"), domain = c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"))
+
+csc <- leaflet(data= longlatMAP, width = "100%") %>% 
+  addProviderTiles(providers$Stamen.Toner) %>% 
+  setView(lat= 45.460305507208126, lng= -122.58072654997403, zoom=12) %>% 
+  addMarkers(lat= 45.460305507208126, lng= -122.58072654997403, label = "Clackamas Service Center", labelOptions = labelOptions(noHide = T)) %>% 
+  addCircleMarkers(~long, ~lat,
+    data= churc ,
+    radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+    color = ~pal(Source),
+    stroke = FALSE, fillOpacity = 0.5,
+    popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations),
+    group= "Churches & Clubs") %>% 
+  addCircleMarkers(~long, ~lat,
+    data= corp ,
+    radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+    color = ~pal(Source),
+    stroke = FALSE, fillOpacity = 0.5,
+    popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations),
+    group= "Corporate") %>% 
+  addCircleMarkers(~long, ~lat,
+    data= found ,
+    radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+    color = ~pal(Source),
+    stroke = FALSE, fillOpacity = 0.5,
+    popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations),
+    group= "Foundations/Grants/Government") %>%  
+  addCircleMarkers(~long, ~lat,
+    data= indiv,
+    radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+    color = ~pal(Source),
+    stroke = FALSE, fillOpacity = 0.5,
+    popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations),
+    group= "Individual Contributions") %>%   
+  addLayersControl(
+    # baseGroups = c("OSM (default)", "Toner", "Toner Lite"),
+    overlayGroups = c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"),
+    options = layersControlOptions(collapsed = FALSE) )
+csc
+```
+
+
+```{r, include=FALSE}
+# Set a year of interest
+this.year = 2019
+
+# This looks at the 5 year estimates
+# You can also do "acs1"
+vars <- load_variables(year = this.year,
+                      dataset = "acs5",
+                      cache = TRUE)
+
+# There are 25070 possible variables 
+dim(vars)
+```
+
+```{r, warning=F, include=FALSE}
+# MEDIAN HOME VALUE
+orMedvG <- get_acs(geography = "tract", year=this.year,
+               state = "OR", county = c("Multnomah", "Clackamas"),
+               variables = "B25077_001E", 
+               geometry = TRUE)
+```
+
+
+```{r, warning=F, echo=FALSE}
+qpal<-colorQuantile("viridis", domain=orMedvG$estimate,
+                       n=5,na.color="#FFFFFF")
+popup<-paste(#"Tract: ", as.character(substring(orMedvG$GEOID, 6, 11)), "<br>",
+             "Median Home Value: ", as.character(orMedvG$estimate))
+leaflet(width = "100%")%>%
+  addProviderTiles(providers$Stamen.Toner)%>%
+
+  setView(lat= 45.460305507208126, lng= -122.58072654997403, zoom=10) %>% 
+  addMarkers(lat= 45.460305507208126, lng= -122.58072654997403, label = "Clackamas Service Center",
+    labelOptions = labelOptions(noHide = T)) %>% 
+
+  
+  
+  addPolygons(data=orMedvG,
+              fillColor= ~qpal(orMedvG$estimate),
+              fillOpacity = 0.8,
+                  color="grey",
+                  opacity=.5,
+                  weight = 0.4,
+                  smoothFactor = 0.2,
+                  popup = popup)%>%
+  
+  addCircleMarkers(~long, ~lat, data=longlatMAP,
+        radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+        stroke = FALSE, fillOpacity = 0.3,
+        popup = ~as.character(Total_Donations/(orMedvG$estimate)*100), label = ~as.character(Total_Donations/ (orMedvG$estimate)*100)
+         ) %>% 
+  addLegend("bottomright", pal=qpal, values=orMedvG$estimate,
+                opacity = .7,
+                title="Home Value Percentile")
+```
+
+
+
+
+
+
 
 # Next steps
 
