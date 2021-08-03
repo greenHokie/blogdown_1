@@ -1,5 +1,5 @@
 ---
-title: Draft Capstone
+title: Weathering the Pandemic
 author: H. Rugnetta
 date: '2021-07-28'
 slug: draft-capstone
@@ -9,6 +9,8 @@ tags:
   - Houseless
   - R Markdown
 ---
+
+![Presumed houseless individual holding sign](homelessness-sign.jpg) 
 
 COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals struggled to make ends meet and reached out to community organizations like food pantries and utility assistance programs for help. How did these organizations handle the influx of need? How did that impact the families and individuals who were being helped prior COVID?
 
@@ -56,35 +58,73 @@ head(pantry)
 grantData <-  read_csv("index_files/CSC_Grant_Data.csv")
 
 grantData$Month <- grantData$Month %>%  as.Date(format = "%d-%b-%y")
+grantData <- grantData %>% drop_na()
 head(grantData)
 ```
 
 
-```{r, include=FALSE}
-grant2 <- grantData %>% 
-  pivot_longer(
-    cols = c(DeliverMultnomah, DeliverClackamas), 
-    names_to ="Location",
-    values_to = "Lbs")
-grant2 <- grant2 %>% 
-  select(Month, Location, Lbs)
-grant2 <- as_tsibble(grant2, key = Location, index = Month)
-#grant2[ , !(names(grant2) %in% drop)]
-grant2
-```
-```{r, width = "100%", warning=FALSE}
+
+```{r, warning=FALSE} 
+knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
 foodDistr <- ggplot(grantData, aes(Month, LbsFood_Distr))+
-  geom_point()
+  geom_line()+
+  scale_y_continuous(labels = scales::comma)+
+  scale_x_date(date_minor_breaks = "1 month", 
+               date_labels = "%b %Y",
+               limits = )+
+  labs(x = "Month",
+       y= "Lbs of Food Distributed", 
+       title= "Monthly Food Distribution from the Clackamas Service Center",
+       subtitle = "To all food programs",
+       caption = "Data provided July 2021")
 foodDistr
 ```
 
-
-```{r}
-deliver <- ggplot(grant2, aes(Month, Lbs, color=Location)) +
-  geom_point()
-deliver
+```{r }
+#, include=FALSE}
+wherer <- grantData %>% 
+  pivot_longer(
+    cols = c(DeliverMultnomah, DeliverClackamas), 
+    names_to ="Location",
+    values_to = "Count")
+wherer <- wherer %>% 
+  select(Month, Location, Count)
+wherer <- as_tsibble(wherer, key = Location, index = Month)
+# rm(wherer)
 ```
 
+```{r}
+#knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
+deliver <- ggplot(wherer, aes(Month, Count, color=Location)) +
+  geom_point()+
+   labs(x = "Month",
+       y= "Food Distribtions", 
+       title= "Monthly Food Distribution from the Clackamas Service Center",
+       subtitle = "By Location",
+       caption = "Data provided July 2021")
+deliver
+```
+```{r, include=FALSE}
+clientSer <- grantData %>% 
+  pivot_longer(
+    cols = c(Market_Visits, Boxes, ToGo_Bags), 
+    names_to ="Client_Service",
+    values_to = "Count")
+clientSer <- clientSer %>% 
+  select(Month, Client_Service, Count)
+clientSer <- as_tsibble(clientSer, key = Client_Service, index = Month)
+```
+
+```{r}
+#knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
+ggplot(clientSer, aes(Month, Count, color=Client_Service)) +
+  geom_line()+
+   labs(x = "Recorded Month",
+       y= "Lbs of Food Distributed", 
+       title= "Monthly Food Distribution from the Clackamas Service Center",
+       subtitle = "To all food programs",
+       caption = "Data provided July 2021")
+```
 
 ```{r, include=FALSE}
 donorData <-  read_csv("index_files/csc_donations-2017.csv")
@@ -238,7 +278,7 @@ leaflet(width = "100%")%>%
   addCircleMarkers(~long, ~lat, data=longlatMAP,
         radius = ~ifelse(Total_Donations >= 1000, 20, 10),
         stroke = FALSE, fillOpacity = 0.3,
-        popup = ~as.character(Total_Donations/(orMedvG$estimate)*100), label = ~as.character(Total_Donations/ (orMedvG$estimate)*100)
+        popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations/ (orMedvG$estimate)*100)
          ) %>% 
   addLegend("bottomright", pal=qpal, values=orMedvG$estimate,
                 opacity = .7,
