@@ -10,25 +10,21 @@ tags:
   - R Markdown
 ---
 
-![Presumed houseless individual holding sign](homelessness-sign.jpg) 
+![/Asking/ houseless individual holding sign](homelessness-sign.jpg){width=100%}
 
-COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals struggled to make ends meet and reached out to community organizations like food pantries and utility assistance programs for help. How did these organizations handle the influx of need? How did that impact the families and individuals who were being helped prior COVID?
+COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals working in the service and entertainment industries suddenly found themselves struggling to make ends meet without income, forced to choose between groceries, childcare, and housing.  The housing crisis was worsened as more minimum wage jobs disappeared. Local organizations and non-profits stepped in, providing assistance as they had prior to the pandemic, but how did they handle the crisis? And were they able to provide the same level service they had during “before-times”?
 
-This project will look at the donors and volunteers that help those organizations exist. Specifically, data from the Clackamas Service Center (CSC), an unhoused assistance program, before and during COVID-19 will be examined. With this information, the CSC and similarly focused organizations can forge a path forward to better serve their clients if and when the next disaster strikes.
+This project will look at how one organization continued helping its neighbors in the midst of the chaos. Data from the Clackamas Service Center (CSC), a nonprofit in the greater Portland metro area of Oregon, will show how a houseless assistance program pivoted when COVID-19 struck and how, in turn, a neighborhood came to help the organization.
 
-## Context
+##  Context
 
+Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area’s few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnomah counties. The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete its mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. 
 
-Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area's few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnommah counties. It was one of the areas only shelters.
-
-
-The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete it's mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. When the pandemic hit, that changed. Volunteers, who are primarily seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the hot meal programs and the free market, increased dramatically as the pandemic rolled on.
-
-The Clackamas Service Center soldiered on, but how? What can the Clackamas Service Center learn from this crisis and, as a non-profit, can they prepare for the next disaster?
+When the pandemic hit, that changed. Volunteers, who are largely seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the ready meal programs and the free market, increased dramatically as the pandemic ravaged.
 
 
-## EDA
-```{r setup, include=FALSE}
+
+```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = F)
 library(moderndive)
 library(skimr)
@@ -64,24 +60,29 @@ head(grantData)
 
 
 
-```{r, warning=FALSE} 
-knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
+```{r, warning=FALSE, echo=FALSE, out.width="50%"} 
+# knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
 foodDistr <- ggplot(grantData, aes(Month, LbsFood_Distr))+
   geom_line()+
+    theme_minimal()+
   scale_y_continuous(labels = scales::comma)+
   scale_x_date(date_minor_breaks = "1 month", 
                date_labels = "%b %Y",
                limits = )+
   labs(x = "Month",
        y= "Lbs of Food Distributed", 
-       title= "Monthly Food Distribution from the Clackamas Service Center",
+       title= "Monthly Food Distribution",
        subtitle = "To all food programs",
        caption = "Data provided July 2021")
-foodDistr
+dates_vline <- as.Date(c("2020-04-01"))                
+dates_vline <- which(grantData$Month %in% dates_vline)   
+foodDistr + geom_vline(xintercept = as.numeric(grantData$Month[dates_vline]), col= "dark green")
 ```
 
-```{r }
-#, include=FALSE}
+
+
+
+```{r, warning=FALSE, include=FALSE}
 wherer <- grantData %>% 
   pivot_longer(
     cols = c(DeliverMultnomah, DeliverClackamas), 
@@ -93,17 +94,20 @@ wherer <- as_tsibble(wherer, key = Location, index = Month)
 # rm(wherer)
 ```
 
-```{r}
-#knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
-deliver <- ggplot(wherer, aes(Month, Count, color=Location)) +
-  geom_point()+
-   labs(x = "Month",
+
+```{r, warning = FALSE, echo=FALSE}
+# knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
+delir <-ggplot(wherer, aes(Month, Count, fill=Location)) +
+  geom_area()+
+  theme_minimal()+
+  labs(x = "Month",
        y= "Food Distribtions", 
        title= "Monthly Food Distribution from the Clackamas Service Center",
        subtitle = "By Location",
        caption = "Data provided July 2021")
-deliver
+delir
 ```
+
 ```{r, include=FALSE}
 clientSer <- grantData %>% 
   pivot_longer(
@@ -115,15 +119,18 @@ clientSer <- clientSer %>%
 clientSer <- as_tsibble(clientSer, key = Client_Service, index = Month)
 ```
 
-```{r}
+```{r, echo=FALSE}
 #knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
-ggplot(clientSer, aes(Month, Count, color=Client_Service)) +
-  geom_line()+
-   labs(x = "Recorded Month",
-       y= "Lbs of Food Distributed", 
+served <- ggplot(clientSer, aes(Month, Count, fill=Client_Service)) +
+  geom_area()+
+   labs(x = "Month",
+       y= "Units of Food", 
        title= "Monthly Food Distribution from the Clackamas Service Center",
        subtitle = "To all food programs",
        caption = "Data provided July 2021")
+dates_vline <- as.Date(c("2020-04-01"))                
+dates_vline <- which(clientSer$Month %in% dates_vline)   
+served + geom_vline(xintercept = as.numeric(clientSer$Month[dates_vline]), col= "dark green")
 ```
 
 ```{r, include=FALSE}
@@ -132,7 +139,7 @@ donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
 head(donorData)
 ```
-```{r, width = "100%"}
+```{r, echo=FALSE, width = "100%"}
 donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
   geom_point()
 donation
