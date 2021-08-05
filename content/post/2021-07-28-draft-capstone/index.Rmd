@@ -1,28 +1,33 @@
 ---
 title: Weathering the Pandemic
 author: H. Rugnetta
-date: '2021-07-28'
-slug: draft-capstone
+date: '2021-08-04'
+slug: capstone
 categories:
   - R
 tags:
   - Houseless
   - R Markdown
+  - Nonprofits
 ---
 
-![/Asking/ houseless individual holding sign](homelessness-sign.jpg){width=100%}
+![Sign of the times.](homelessness-sign.jpg){width=100%}
 
 COVID took a devastating toll on the economy. Businesses shut their doors, employees were laid off, bills went unpaid. Families and individuals working in the service and entertainment industries suddenly found themselves struggling to make ends meet without income, forced to choose between groceries, childcare, and housing.  The housing crisis was worsened as more minimum wage jobs disappeared. Local organizations and non-profits stepped in, providing assistance as they had prior to the pandemic, but how did they handle the crisis? And were they able to provide the same level service they had during “before-times”?
 
-This project will look at how one organization continued helping its neighbors in the midst of the chaos. Data from the Clackamas Service Center (CSC), a nonprofit in the greater Portland metro area of Oregon, will show how a houseless assistance program pivoted when COVID-19 struck and how, in turn, a neighborhood came to help the organization.
+This post looks at how one organization continued helping its neighbors in the midst of the chaos. Data from the [Clackamas Service Center (CSC)](https://www.cscoregon.org/), a nonprofit located in the greater Portland, Oregon area, illustrates how a houseless assistance program pivoted when COVID-19 struck and how, in turn, a neighborhood came to help the organization.
 
 ##  Context
 
-Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area’s few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnomah counties. The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete its mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and shop the free market for groceries. 
+Like many non-profits, Clackamas Service Center arose from need. Located in southeast Portland, the CSC is one of the area’s few social service centers, providing low-income and houseless services to community members of the Clackamas and Multnomah counties. The Clackamas Service Center relies heavily on in-kind donations (food, sanitation items, clothing) as well as volunteers to complete its mission. Pre-pandemic, the center was a location for the houseless to grab a meal 6 days a week, receive mail, and receive medical attention. They could also get a shower, clothing, and "shop" the free market for groceries. 
 
-When the pandemic hit, that changed. Volunteers, who are largely seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the ready meal programs and the free market, increased dramatically as the pandemic ravaged.
+When the pandemic hit, that changed. Volunteers, who are largely seniors, could no longer serve the center preparing meals without putting themselves at risk. Donors, many of them local businesses, cut back or eliminated their donations straining the Clackamas Service Center further. And the need for food, both from the lunch programs and the free market, increased as the pandemic ravaged.
 
+## The need to eat
 
+Schools, restaurants, and stores may have shut their doors in an attempt to stimy the spread of a disease we knew so little about, but hunger hung on.  Just as school free lunch programs could no longer reach students they way they had in the past, clients at the Clackamas Service Center could no longer get meals and supplies they had. 
+
+The Clackamas Service Center receives bulk food from a number of resources, including the [Oregon Food Bank]( https://www.oregonfoodbank.org/), local bakeries and grocery stores, and restaurants.  The CSC does their best to distribute the thousands of pounds each month.
 
 ```{r setup, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = F)
@@ -41,8 +46,6 @@ options(repos=r)})
 
 ```
 
-
-
 ```{r, include=FALSE}
 
 pantry <-  read_csv("index_files/CSC_Pantry.csv")
@@ -58,55 +61,32 @@ grantData <- grantData %>% drop_na()
 head(grantData)
 ```
 
-
-
-```{r, warning=FALSE, echo=FALSE, out.width="50%"} 
+```{r, warning=FALSE, echo=FALSE, out.width="100%"} 
 # knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
 foodDistr <- ggplot(grantData, aes(Month, LbsFood_Distr))+
   geom_line()+
     theme_minimal()+
-  scale_y_continuous(labels = scales::comma)+
+  scale_y_continuous(labels = scales::comma,
+                     limits = c(0, 75000))+
   scale_x_date(date_minor_breaks = "1 month", 
                date_labels = "%b %Y",
                limits = )+
-  labs(x = "Month",
+  labs(x = NULL,
        y= "Lbs of Food Distributed", 
-       title= "Monthly Food Distribution",
-       subtitle = "To all food programs",
+       title= "Monthly Food Distribution from the Clackamas Service Center",
+       subtitle = "To all programs, including prepared meals and marketplace",
        caption = "Data provided July 2021")
 dates_vline <- as.Date(c("2020-04-01"))                
 dates_vline <- which(grantData$Month %in% dates_vline)   
 foodDistr + geom_vline(xintercept = as.numeric(grantData$Month[dates_vline]), col= "dark green")
 ```
 
+The vertical line shows April 2020, two weeks into quarantine.  The reader will no doubt note the monthly fluctuations in food distributions, due in large part to changing contributions from suppliers, but also the needs of the clients themselves.
 
+As mentioned above, the CSC offers prepared meals six days a week. Prior to COVID-19, meals were cafeteria style, offering a sense of community and home to those who ate there.  Like restaurants, the Clackamas Service Center turned to to-go style meals to continue serving clients.
 
+COVID-19 also impacted the CSC's ability to offer a free marketplace to clients.  No longer could individuals and browse the pantry shelves themselves.  Mid-March as rumors of quarantine began to swirl, visits to grocery stores spiked; so, too, did marketplace visits escalate.
 
-```{r, warning=FALSE, include=FALSE}
-wherer <- grantData %>% 
-  pivot_longer(
-    cols = c(DeliverMultnomah, DeliverClackamas), 
-    names_to ="Location",
-    values_to = "Count")
-wherer <- wherer %>% 
-  select(Month, Location, Count)
-wherer <- as_tsibble(wherer, key = Location, index = Month)
-# rm(wherer)
-```
-
-
-```{r, warning = FALSE, echo=FALSE}
-# knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
-delir <-ggplot(wherer, aes(Month, Count, fill=Location)) +
-  geom_area()+
-  theme_minimal()+
-  labs(x = "Month",
-       y= "Food Distribtions", 
-       title= "Monthly Food Distribution from the Clackamas Service Center",
-       subtitle = "By Location",
-       caption = "Data provided July 2021")
-delir
-```
 
 ```{r, include=FALSE}
 clientSer <- grantData %>% 
@@ -120,35 +100,45 @@ clientSer <- as_tsibble(clientSer, key = Client_Service, index = Month)
 ```
 
 ```{r, echo=FALSE}
-#knitr::opts_chunk$set(echo = TRUE,fig.width = 12,fig.height = 4)
 served <- ggplot(clientSer, aes(Month, Count, fill=Client_Service)) +
   geom_area()+
-   labs(x = "Month",
-       y= "Units of Food", 
-       title= "Monthly Food Distribution from the Clackamas Service Center",
-       subtitle = "To all food programs",
+  theme_minimal()+
+   labs(x= NULL,
+     y= "Grocery Clients", 
+       title= "Monthly Grocery Distribution from the Clackamas Service Center",
+       subtitle = "Distribution methods via self service and request",
        caption = "Data provided July 2021")
 dates_vline <- as.Date(c("2020-04-01"))                
 dates_vline <- which(clientSer$Month %in% dates_vline)   
 served + geom_vline(xintercept = as.numeric(clientSer$Month[dates_vline]), col= "dark green")
 ```
 
+
+Late March, the CSC pivoted to side-walk grocery pickup; by April, they had fully abandoned the traditional food pantry and moved to delivering boxes of groceries to camps and residences.
+
+## Where is the funding coming from?
+
+The Clackamas Service Center relies on grants, federal funding, and corporate donations, as well as individual contributions, both in volunteer hours and in funding.  
+
 ```{r, include=FALSE}
-donorData <-  read_csv("index_files/csc_donations-2017.csv")
+donorData <-  read_csv("index_files/csc_donations-2019.csv")
 donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
 head(donorData)
 ```
 ```{r, echo=FALSE, width = "100%"}
 donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
-  geom_point()
+  geom_jitter() +
+  theme_minimal()+
+  scale_y_continuous(labels = scales::comma,
+                     limits = c(0, 90000))+  
+   labs(x = NULL,
+       y= "Contributions, USD($)", 
+       title= "Funding Sources for the Clackamas Service Center",
+       subtitle = "Distribution methods via self service and request",
+       caption = "Data provided July 2021")
 donation
 ```
-
-# Where is the funding coming from?
-
-The Clackamas Service Center relies heavily on individual contributions, both in volunteer hours and in funding.  Below are some visuals.
-
 
 ```{r, include=F}
 # load packages
@@ -170,7 +160,7 @@ library(tidycensus)
 
 ```
 
-
+Below, one can see who and where funding is coming from.  Larger circles are lifetime donations over $1000. 
 ```{r, warning=FALSE, include=FALSE}
 longlatMAP <- read_csv("index_files/latlongStart.csv")
 longlatMAP <- longlatMAP[c(1:4,7:8)]
@@ -189,8 +179,6 @@ corp <- longlatMAP %>%
 found <- longlatMAP %>% 
   filter(Source=="Foundations/Grants/Government")
 ```
-
-
 
 
 ```{r, warning=FALSE, echo=F}
@@ -258,7 +246,7 @@ orMedvG <- get_acs(geography = "tract", year=this.year,
                geometry = TRUE)
 ```
 
-
+Below is the median home values overlayed with lifetime donations from all sources.
 ```{r, warning=F, echo=FALSE}
 qpal<-colorQuantile("viridis", domain=orMedvG$estimate,
                        n=5,na.color="#FFFFFF")
@@ -285,7 +273,7 @@ leaflet(width = "100%")%>%
   addCircleMarkers(~long, ~lat, data=longlatMAP,
         radius = ~ifelse(Total_Donations >= 1000, 20, 10),
         stroke = FALSE, fillOpacity = 0.3,
-        popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations/ (orMedvG$estimate)*100)
+        popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations)
          ) %>% 
   addLegend("bottomright", pal=qpal, values=orMedvG$estimate,
                 opacity = .7,
@@ -293,29 +281,13 @@ leaflet(width = "100%")%>%
 ```
 
 
-
-
-
-
-
-# Next steps
-
-Continue with EDA, make some pretty graphics.  Look at data on criminalization of the houseless.  Map out donors and amounts with shiny app.
-
-
-## Proposal
+## Wrap
 
 As a non-profit, the Clackamas Service Center does an excellent job of tracking their monetary donations and who their donors are. They know basic information about the donors, how often they give, and how much. They know how much monetary value is distributed through to their staff and the items purchased to support their programs directly. They also track in-kind donations and volunteer hours.
 
-What they don't have a clear picture of is how they assist the community, or rather, a dollar amount per person per day. They track the number of meals served, hygiene kits distributed, showers facilitated, and how many individuals they assist each day. Separately, they track demographics for those unhoused individuals who volunteer their information. They also track the number of food boxes as well as those who receive them.
-
-The Clackamas Service Center is suffering from a wealth of information they cannot easily use. Housed in 4 different databases and excel sheets with no integration, they struggle to tell a concrete story of numbers. They can illustrate a snapshot of numbers for a given quarter, but they have developed the information to tell a story over time.
-
-With the information the Clackamas Service Center shares with me, I hope to supplement their grant writing efforts to tell a better story, beyond anecdotes and snapshot numbers. I want to help Clackamas Service Center consolidate their data, remove inherent duplication, and streamline their data collection while still maintaining the trust level they've established with their houseless clients. I also hope to illustrate the need vs supply (monetary, meals, services) over time.
-
-
-## Conclusion
+The picture of who their clients are and how to best serve them suffered during COVID-19, as volunteers focused on helping and serving clients rather collecting data on them. Prior to the pandemic, the integerity of the data hinged on the willingness of clients to disclose their information.
 
 Non-profits across the country were forced to pivot in 2020 when their sources of financial support fell short. Many organizations that serve the houseless and food-insecure found themselves doubly hit when the need for their services increased as individuals lost their jobs. Illustrating how money and services flow in non-profits, through donations and distribution, will help organizations like the Clackamas Service Center prepare for local and national crises.
 
-The are some limitations to be assumed with the data, as it is all manually entered; one can assume that the volunteers who would have collected the data were also impacted by COVID. Sensitive information will likely be redacted and fidelity may be lost. In-kind donations of meals and clothing are valued subjectively, and the monetary value to the organization will likely be inconsistent.
+#### Note
+The are some limitations to be assumed with the data, as it is all manually entered; one can assume that the volunteers who would have collected the data were also impacted by COVID. Sensitive information has been redacted. 
