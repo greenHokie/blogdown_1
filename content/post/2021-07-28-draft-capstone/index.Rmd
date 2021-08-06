@@ -126,7 +126,7 @@ donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
 head(donorData)
 ```
-```{r, echo=FALSE, width = "100%"}
+```{r, echo=FALSE, warning= FALSE, width = "100%"}
 donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
   geom_jitter() +
   theme_minimal()+
