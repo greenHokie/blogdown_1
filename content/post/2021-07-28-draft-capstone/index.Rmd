@@ -73,12 +73,12 @@ foodDistr <- ggplot(grantData, aes(Month, LbsFood_Distr))+
                limits = )+
   labs(x = NULL,
        y= "Lbs of Food Distributed", 
-       title= "Monthly Food Distribution from the Clackamas Service Center",
-       subtitle = "To all programs, including prepared meals and marketplace",
-       caption = "Data provided July 2021")
+       title= "Food Distribution throughout Portland Metro",
+       subtitle = "Before and after COVID-19",
+       caption = "Source: Clackamas Service Center")
 dates_vline <- as.Date(c("2020-04-01"))                
 dates_vline <- which(grantData$Month %in% dates_vline)   
-foodDistr + geom_vline(xintercept = as.numeric(grantData$Month[dates_vline]), col= "dark green")
+foodDistr + geom_vline(xintercept = as.numeric(grantData$Month[dates_vline]), col= "dark green", show.legend = TRUE)
 ```
 
 The vertical line shows April 2020, two weeks into quarantine.  The reader will no doubt note the monthly fluctuations in food distributions, due in large part to changing contributions from suppliers, but also the needs of the clients themselves.
@@ -99,15 +99,21 @@ clientSer <- clientSer %>%
 clientSer <- as_tsibble(clientSer, key = Client_Service, index = Month)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, out.width="100%"}
 served <- ggplot(clientSer, aes(Month, Count, fill=Client_Service)) +
   geom_area()+
   theme_minimal()+
    labs(x= NULL,
-     y= "Grocery Clients", 
-       title= "Monthly Grocery Distribution from the Clackamas Service Center",
+     y= "# of Grocery Clients", 
+       title= "Grocery Distribution throughout Portland Metro",
        subtitle = "Distribution methods via self service and request",
-       caption = "Data provided July 2021")
+       caption = "Source: Clackamas Service Center")+
+  theme(legend.position = c(.25, .25),
+        legend.background = element_rect(fill= "white"),
+        legend.title = element_blank())+
+  scale_fill_discrete(#name="Experimental\nCondition",
+                         breaks=c("Market_Visits", "Boxes", "ToGo_Bags"),
+                         labels=c("Market Visits", "Box Delivery", "Curbside & To Go"))
 dates_vline <- as.Date(c("2020-04-01"))                
 dates_vline <- which(clientSer$Month %in% dates_vline)   
 served + geom_vline(xintercept = as.numeric(clientSer$Month[dates_vline]), col= "dark green")
@@ -126,18 +132,55 @@ donorData$rcvdDate <- donorData$Received_Date %>%  as.Date(format = "%d-%b-%y")
 donorData <- as_tsibble(donorData, key = Donation_Id, index = rcvdDate)
 head(donorData)
 ```
-```{r, echo=FALSE, warning= FALSE, width = "100%"}
-donation <- ggplot(donorData, aes(rcvdDate, Amount, color=Source)) +
+
+```{r, echo=FALSE, warning= FALSE, out.width = "100%"}
+donation <- ggplot(donorData, aes(rcvdDate,Amount, color=Source)) +
   geom_jitter() +
+  #geom_smooth(method=lm, se=FALSE)+
   theme_minimal()+
   scale_y_continuous(labels = scales::comma,
-                     limits = c(0, 90000))+  
+                     #limits = c(0, 90000)
+                     )+  
+   theme(legend.position = c(.25, .75),
+        legend.background = element_rect(fill= "white"),
+        legend.title = element_blank()
+        )+
    labs(x = NULL,
-       y= "Contributions, USD($)", 
-       title= "Funding Sources for the Clackamas Service Center",
-       subtitle = "Distribution methods via self service and request",
-       caption = "Data provided July 2021")
-donation
+       y= "Contribution amount, USD($)", 
+       title= "Funding Sources",
+       subtitle = "Pre and post COVID-19",
+       caption = "Source: Clackamas Service Center") +
+  scale_color_discrete(#name="Experimental\nCondition",
+                         breaks=c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"),
+                         labels=c("Churches", "Corporations", "Grants", "Individuals"))
+dates_vline <- as.Date(c("2020-04-01"))                
+dates_vline <- which(donorData$rcvdDate %in% dates_vline)   
+donation + geom_vline(xintercept = as.numeric(donorData$rcvdDate[dates_vline]), col= "dark green")
+```
+
+```{r, echo=FALSE, warning= FALSE, out.width = "100%"}
+log_donation <- ggplot(donorData, aes(rcvdDate, log(Amount), color=Source)) +
+  geom_jitter() +
+  #geom_smooth(method=lm, se=FALSE)+
+  theme_minimal()+
+  scale_y_continuous(labels = scales::comma,
+                     #limits = c(0, 90000)
+                     )+  
+   theme(legend.position = c(.15, .8),
+        legend.background = element_rect(fill= "white"),
+        legend.title = element_blank()
+        )+
+   labs(x = NULL,
+       y= "Log of Contributions, USD($)", 
+       title= "Funding Sources",
+       subtitle = "Log of contributions to illustrate participation level",
+       caption = "Source: Clackamas Service Center") +
+  scale_color_discrete(#name="Experimental\nCondition",
+                         breaks=c("Churches & Clubs", "Corporate", "Foundations/Grants/Government", "Individual Contributions"),
+                         labels=c("Churches", "Corporations", "Grants", "Individuals"))
+dates_vline <- as.Date(c("2020-04-01"))                
+dates_vline <- which(donorData$rcvdDate %in% dates_vline)   
+log_donation + geom_vline(xintercept = as.numeric(donorData$rcvdDate[dates_vline]), col= "dark green")
 ```
 
 ```{r, include=F}
