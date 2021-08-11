@@ -7,7 +7,7 @@ categories:
   - R
 tags:
   - R Markdown
-  - Homelesss rights
+  - Houselesss rights
   - McKinney-Vento
   - DecriminalizeBeingHomeless
 ---

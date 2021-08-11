@@ -158,10 +158,12 @@ dates_vline <- which(donorData$rcvdDate %in% dates_vline)
 donation + geom_vline(xintercept = as.numeric(donorData$rcvdDate[dates_vline]), col= "dark green")
 ```
 
+And for an added visual, the same data was logged to illustrate the number of donations, specifically the uptick following the start of COVID-19 shutdowns.
+
 ```{r, echo=FALSE, warning= FALSE, out.width = "100%"}
 log_donation <- ggplot(donorData, aes(rcvdDate, log(Amount), color=Source)) +
   geom_jitter() +
-  #geom_smooth(method=lm, se=FALSE)+
+  # geom_smooth(method=lm, se=FALSE)+
   theme_minimal()+
   scale_y_continuous(labels = scales::comma,
                      #limits = c(0, 90000)
@@ -172,7 +174,7 @@ log_donation <- ggplot(donorData, aes(rcvdDate, log(Amount), color=Source)) +
         )+
    labs(x = NULL,
        y= "Log of Contributions, USD($)", 
-       title= "Funding Sources",
+       title= "Funding Sources, logged",
        subtitle = "Log of contributions to illustrate participation level",
        caption = "Source: Clackamas Service Center") +
   scale_color_discrete(#name="Experimental\nCondition",
@@ -289,7 +291,8 @@ orMedvG <- get_acs(geography = "tract", year=this.year,
                geometry = TRUE)
 ```
 
-Below is the median home values overlayed with lifetime donations from all sources.
+Below is the median home values overlayed with lifetime donations from individual contributors; notice that the heaviest concentration of donations does not correspond to home value nor does relate to proximity the CSC.
+
 ```{r, warning=F, echo=FALSE}
 qpal<-colorQuantile("viridis", domain=orMedvG$estimate,
                        n=5,na.color="#FFFFFF")
@@ -298,10 +301,13 @@ popup<-paste(#"Tract: ", as.character(substring(orMedvG$GEOID, 6, 11)), "<br>",
 leaflet(width = "100%")%>%
   addProviderTiles(providers$Stamen.Toner)%>%
 
-  setView(lat= 45.460305507208126, lng= -122.58072654997403, zoom=10) %>% 
+  setView(lat= 45.460305507208126, lng= -122.58072654997403, zoom=11) %>% 
   addMarkers(lat= 45.460305507208126, lng= -122.58072654997403, label = "Clackamas Service Center",
     labelOptions = labelOptions(noHide = T)) %>% 
-
+  addMarkers(lat= 45.417412289371875, lng = -122.70460198001354, label = "Lake Oswego",
+    labelOptions = labelOptions(noHide = T)) %>% 
+  addMarkers(lat= 45.44644666404144, lng= -122.52934240242001, label = "Happy Valley",
+    labelOptions = labelOptions(noHide = T)) %>% 
   
   
   addPolygons(data=orMedvG,
@@ -312,12 +318,17 @@ leaflet(width = "100%")%>%
                   weight = 0.4,
                   smoothFactor = 0.2,
                   popup = popup)%>%
+  addCircleMarkers(~long, ~lat,
+    data= indiv,
+    radius = ~ifelse(Total_Donations >= 1000, 20, 10),
+    color = "white",
+    stroke = FALSE, fillOpacity = 0.4,
+    popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations)#,
+    #group= "Individual Contributions"
+    ) %>%   
   
-  addCircleMarkers(~long, ~lat, data=longlatMAP,
-        radius = ~ifelse(Total_Donations >= 1000, 20, 10),
-        stroke = FALSE, fillOpacity = 0.3,
-        popup = ~as.character(Total_Donations), label = ~as.character(Total_Donations)
-         ) %>% 
+  
+  
   addLegend("bottomright", pal=qpal, values=orMedvG$estimate,
                 opacity = .7,
                 title="Home Value Percentile")
